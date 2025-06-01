@@ -105,7 +105,7 @@ for ((i=25; i>=0; i-=5)); do
     sleep 5
 done
 echo -e "\n🚀 Iniciando a instalação..."
-sudo apt install -y ndd-dca-and-cloud-connector
+sudo apt install ndd-dca-and-cloud-connector
 
 echo "⚙️ Configurando o agente..."
 
