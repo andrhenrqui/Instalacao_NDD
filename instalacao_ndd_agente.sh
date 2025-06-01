@@ -65,7 +65,7 @@ echo "✅ Ajustes no sysctl.conf aplicados com sucesso."
 ### === IMPORTAÇÃO E ATUALIZAÇÃO DO CERTIFICADO DO GATEWAY === ###
 
 if [ "$COMUNICACAO" = "gateway" ]; then
-    GITHUB_RAW_URL="https://raw.githubusercontent.com/usuario/repositorio/main/nddgateway.crt"
+    GITHUB_RAW_URL="https://raw.githubusercontent.com/andrhenrqui/Instalacao_NDD/main/instalacao_ndd_agente.sh"
     LOCAL_CERT="/usr/local/share/ca-certificates/nddgateway.crt"
 
     echo "📡 Verificando atualização do certificado do Gateway..."
