@@ -100,7 +100,7 @@ sudo apt-get update -y && sudo apt-get upgrade -y
 
 echo "📝 Prepare o arquivo auxiliar com as informações necessárias antes de prosseguir com a instalação."
 echo "⏳ A instalação do agente começará em instantes ..."
-for ((i=25; i>=0; i-=5)); do
+for ((i=20; i>=0; i-=5)); do
     echo -ne "⏳ $i segundos restantes...\r"
     sleep 5
 done
@@ -128,15 +128,10 @@ else
     
     if systemctl is-active --quiet "$SERVICE_NAME"; then
         echo "✅ O serviço $SERVICE_NAME foi iniciado com sucesso."
-        sudo systemctl status "$SERVICE_NAME"
     else
         echo "❌ Falha ao iniciar o serviço $SERVICE_NAME. Verifique manualmente com: sudo systemctl status $SERVICE_NAME"
     fi
 fi
-
-echo "✅ Instalação e configuração concluídas com sucesso!"
-
-echo "📡 Hostname da máquina: $(hostname)"
 
 ### === CRIAÇÃO DO SCRIPT DE VERIFICAÇÃO PARA EXECUÇÃO NO BOOT === ###
 
@@ -179,3 +174,9 @@ sudo systemctl daemon-reload
 sudo systemctl enable verificar-ndd.service
 
 echo "✅ Serviço de verificação criado e habilitado para iniciar com o sistema."
+
+echo "✅ Instalação e configuração concluídas com sucesso!"
+
+echo "📡 Hostname da máquina: $(hostname)"
+
+sudo systemctl status "$SERVICE_NAME"
