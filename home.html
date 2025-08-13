@@ -3,10 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_home.css">
     <title>Canal do técnico - HOME</title>
 </head>
 <body>
-    <h3>Bem vindo</h3>
-    
+    <header>
+    </header>
+    <main>
+        <h1>Instalador NDD Orbix - LINUX</h1>
+        <p> Clique no link para baixar o Instalador.</p>
+        <p><a href="instalacao_ndd_agente.sh">Instalação NDD agente</a></p>
+
+        <h2>Instruções de Instalação</h2>
+        <ol>
+            <li>Após baixar o instalador, copie e cole na área de trabalho. </li>
+            <li>Clique com o direito no fundo da área e escolha abrir terminal.</li>
+            <li>Dê permissão de execução ao script no terminal:</li>
+            <div class="code-box">
+                <span>chmod +x instalacao_ndd_agente.sh</span>
+                <button class="copy-btn" onclick="copiarComando(this)" data-comando="chmod +x instalacao_ndd_agente.sh">Copiar</button>
+            </div>
+            <li>Inicie o script:</li>
+            <div class="code-box">
+                <span>bash ./instalacao_ndd_agente.sh</span>
+                <button class="copy-btn" onclick="copiarComando(this)" data-comando="bash ./instalacao_ndd_agente.sh">Copiar</button>
+            </div>
+            <li>Informe o TENNANT:</li>
+            <div class="code-box">
+                <span>SELBETTI</span>
+                <button class="copy-btn" onclick="copiarComando(this)" data-comando="SELBETTI">Copiar</button>
+            </div>
+            <li>Serial do cliente:</li>
+            <div class="code-box">
+                <span>31a63c7a-367d-4d98-259a-08dd02500b33</span>
+                <button class="copy-btn" onclick="copiarComando(this)" data-comando="31a63c7a-367d-4d98-259a-08dd02500b33">Copiar</button>
+            </div>
+            <li>Selecione NO para as duas próximas interações. </li>
+            <li>Na tela a seguir confira o HOSTNAME, IP e Status da instalação. </li>
+
+        </ol>
+
+
+
+    </main>
+    <footer></footer>
+    <script src="script.js"></script>
 </body>
 </html>
