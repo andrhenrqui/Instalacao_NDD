@@ -1,39 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <title>Team-Itajai</title>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> 
+    <link rel="stylesheet" href="style.css">
 
+    <title>Canal Técnico - LOGIN</title>
+</head>
 <body>
     <main class="container">
         <form action="">
-            <h1>Team Itajaí</h1>
+            <div class="logo">
+                <svg width="192.858" height="45" viewBox="0 0 192.858 45" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)"><path d="M8.963 36.055H0V45h8.963zM187.367 9.177a5.5 5.5 0 0 0-5.491 5.483 5.51 5.51 0 0 0 5.491 5.482 5.51 5.51 0 0 0 5.491-5.482 5.51 5.51 0 0 0-5.491-5.482" fill="#EF8944"/><path d="M42.935 10.437c-9.53 0-15.305 6.626-15.305 14.722 0 8.1 5.902 14.725 15.305 14.725 4.365 0 8.111-1.533 11.249-4.538l-4.182-5.765c-1.72 1.898-4.428 2.941-6.948 2.941-1.662 0-2.954-.307-3.993-.916l17.088-10.368c-2.274-8.531-9.341-10.8-13.214-10.8m-7.313 15.83c-.064-.429-.125-.675-.125-1.109 0-4.047 3.135-7.361 7.557-7.361 1.784 0 3.075.736 3.994 1.779l-11.431 6.689zM69.325.089H61.3v39.777h8.025zm55.164 10.366c-9.529-.151-15.405 6.387-15.53 14.486-.127 8.034 5.667 14.817 15.071 14.963 4.365.069 8.138-1.41 11.319-4.364l-4.088-5.834c-1.752 1.872-4.471 2.872-6.991 2.835-1.655-.026-2.948-.353-3.979-.98l17.249-10.105c-2.141-8.562-9.17-10.945-13.043-11.003zm-7.563 15.71c-.056-.428-.113-.678-.108-1.106.064-4.05 3.25-7.313 7.677-7.242 1.784.024 3.061.786 3.97 1.842zm-96.362-2.408a12 12 0 0 0-1.146-.848c-1.72-1.137-4.233-1.635-6.305-2.187-2.235-.597-3.961-1.259-3.627-2.861.132-.629.561-1.861 3.256-1.917 1.373-.026 4.51.604 5.592 2.363l4.87-5.185C18.428 8.02 1.977 6.525.879 18.389v.829a7.8 7.8 0 0 0 2.451 5.299 10.8 10.8 0 0 0 2.513 1.762c.566.296 1.196.54 1.845.755.863.281 1.752.514 2.633.747 2.513.653 4.87 1.358 4.478 3.23-.251 1.222-1.323 1.848-2.676 2.058a8.6 8.6 0 0 1-1.789.069c-.997-.012-2.048-.36-2.986-.792a7 7 0 0 1-1.121-.592 11 11 0 0 1-1.481-1.006l-.134-.119-2.915 3.117-.547.585h9.515v5.677l.164.019q.728.082 1.495.08c4.156 0 7.79-1.928 9.755-4.796q.577-.848.956-1.792c0-.012.012-.033.019-.044v-.019a8.3 8.3 0 0 0 .578-3.056 8.6 8.6 0 0 0-1.379-4.653 9.7 9.7 0 0 0-1.694-1.999zm160.831-4.74v20.865h7.865V21.927s-5.46 1.144-7.865-2.91M150.831 0l-7.867 4.69v29.063a6.114 6.114 0 0 0 6.121 6.11h4.024l.957-8.373h-3.239V18.199h5.505V10.35h-5.501zm19.245 0-7.865 4.69v29.063a6.114 6.114 0 0 0 6.121 6.11h4.024l.957-8.373h-3.239V18.199h5.505V10.35h-5.505zM102.82 17.804c-3.432-6.783-12.528-9.642-19.883-5.802V.087h-7.854v25.302c-.044 3.886 2.229 8.129 5.216 10.664 12.03 10.208 30.394-2.679 22.523-18.244zM82.723 24.94c.151-8.978 13.51-8.952 13.661 0-.151 8.965-13.51 8.965-13.661 0" fill="#01764B"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h192.858v45H0z"/></clipPath></defs></svg>
+            </div>
+            <h1>Canal do Técnico</h1>
             <div class="input-box">
-                <input placeholder="Usuário" type="email" />
+                <input type="email" placeholder="Usuário" id="login">
                 <i class="bx bxs-user"></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Senha" />
+                <input type="password" placeholder="Senha" id="password">
                 <i class="bx bxs-lock-alt"></i>
             </div>
             <div class="remember-forgot">
-                <label>
-                    <input type="checkbox" />
-                    Lembrar minha senha
+                <label for="">
+                    <input type="checkbox" name="" id="">
+                    Lembrar senha
                 </label>
-                <a href="#">Esqueci minha senha</a>
+                <a href="#">Esqueci a senha</a>
             </div>
-            <button type="submit">Login</button>
+            <button type="submit" class="login" onclick="logar(); return false">Login</button>
             <div class="register-link">
-                <p>Não tem uma conta?</p>
-                <a href=""><span href="#">Cadastre-se</span></a>
+                <p>Não tem conta? <a href="#">Cadastre-se</a></p>
             </div>
         </form>
     </main>
+    <script src="script.js"></script>
 </body>
-
 </html>

@@ -28,6 +28,48 @@ if ! sudo -v; then
 fi
 
 ### === PREPARAÇÃO DO AMBIENTE === ###
+echo "🚀 Iniciando a preparação do ambiente..."
+
+echo "⚠️ Selecione o setor para esta configuração: ⚠️"
+    sleep 5
+PS3="Digite o número da opção e pressione Enter: "
+options=("Prefeitura (Administrativos)" "Escolas" "Saúde")
+select setor in "${options[@]}"; do
+    case $REPLY in
+        1)
+            SETOR="adm"
+            break
+            ;;
+        2)
+            SETOR="edu"
+            break
+            ;;
+        3)
+            SETOR="sau"
+            break
+            ;;
+        *)
+            echo "Opção inválida. Tente novamente."
+            ;;
+    esac
+done
+
+echo "Você escolheu o setor: $SETOR"
+    sleep 5
+
+read -p "Digite o nome do setor ou unidade onde está realizando a configuração: " UNIDADE
+
+echo "Setor/unidade configurado: $UNIDADE"
+    sleep 5
+
+echo "Definindo hostname para ${SETOR}-${UNIDADE}..."
+sudo hostnamectl set-hostname "${SETOR}-${UNIDADE}"
+
+echo "📡 Verificando atualização de pacotes configurados..."
+sudo apt-get update
+
+echo "🚀 Iniciando instalação de pacotes disponiveis..."
+sudo apt-get upgrade
 
 echo "🔧 Verificando SELinux..."
 if command -v getenforce &> /dev/null; then
@@ -178,5 +220,8 @@ echo "✅ Serviço de verificação criado e habilitado para iniciar com o siste
 echo "✅ Instalação e configuração concluídas com sucesso!"
 
 echo "📡 Hostname da máquina: $(hostname)"
+IP_LOCAL=$(ip -4 addr show $(ip route get 8.8.8.8 | awk '{print $5; exit}') | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+
+echo "📡 IP local da máquina: $IP_LOCAL"
 
 sudo systemctl status "$SERVICE_NAME"
