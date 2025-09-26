@@ -107,29 +107,43 @@ if ! sudo apt install ndd-dca-and-cloud-connector; then
 fi
 echo "✅ Agente NDD instalado com sucesso!"
 
-### === CRIAÇÃO DO SCRIPT DE VERIFICAÇÃO DO SERVIÇO === ###
-SERVICE_NAME="NDDPrinterMonitor"
-cat <<EOF | sudo tee /usr/local/bin/verificar_ndd.sh > /dev/null
+### === CRIAÇÃO DO SCRIPT DE VERIFICAÇÃO DE MÚLTIPLOS SERVIÇOS COM RESUMO === ###
+cat <<'EOF' | sudo tee /usr/local/bin/verificar_ndd.sh > /dev/null
 #!/bin/bash
-SERVICE="$SERVICE_NAME"
-echo "🔍 Verificando o status do serviço \$SERVICE no boot..."
-if systemctl is-active --quiet "\$SERVICE"; then
-    echo "✅ O serviço \$SERVICE está em execução."
-else
-    echo "⚠️ O serviço \$SERVICE não está rodando. Tentando iniciar..."
-    systemctl start "\$SERVICE"
-    if systemctl is-active --quiet "\$SERVICE"; then
-        echo "✅ O serviço \$SERVICE foi iniciado com sucesso."
+
+SERVICOS=(
+    "NDDDCAandCloudConnector.service"
+    "NDDPrinterUsbMonitor.service"
+    "NDDPrinterMonitor.service"
+)
+
+echo "🔍 Iniciando verificação dos serviços NDD..."
+
+for SERVICE in "${SERVICOS[@]}"; do
+    if systemctl is-active --quiet "$SERVICE"; then
+        STATUS="ativo ✅"
     else
-        echo "❌ Não foi possível iniciar o serviço \$SERVICE. Verifique manualmente."
+        echo "⚠️ O serviço $SERVICE não está rodando. Tentando iniciar e habilitar no boot..."
+        sudo systemctl enable "$SERVICE"
+        sudo systemctl start "$SERVICE"
+        if systemctl is-active --quiet "$SERVICE"; then
+            STATUS="iniciado e habilitado ✅"
+        else
+            STATUS="falha ❌"
+        fi
     fi
-fi
+    echo "• $SERVICE → $STATUS"
+done
+
+echo "🔹 Resumo final da verificação concluída!"
 EOF
+
 sudo chmod +x /usr/local/bin/verificar_ndd.sh
 
+### === CRIAÇÃO DO SERVIÇO SYSTEMD PARA RODAR NO BOOT === ###
 cat <<EOF | sudo tee /etc/systemd/system/verificar-ndd.service > /dev/null
 [Unit]
-Description=Verifica o serviço NDDPrinterMonitor no boot
+Description=Verifica os serviços NDD no boot
 After=network.target
 
 [Service]
@@ -151,4 +165,3 @@ IP_LOCAL=$(ip -4 addr show $(ip route get 8.8.8.8 | awk '{print $5; exit}') | gr
 echo "📡 IP local da máquina: $IP_LOCAL"
 
 echo "✅ Instalação e configuração concluídas com sucesso!"
-sudo systemctl status "$SERVICE_NAME"
