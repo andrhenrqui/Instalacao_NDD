@@ -107,6 +107,34 @@ if ! sudo apt install ndd-dca-and-cloud-connector; then
 fi
 echo "✅ Agente NDD instalado com sucesso!"
 
+# Lista de serviços que devem estar rodando
+SERVICOS=(
+    "NDDDCAandCloudConnector.service"
+    "NDDPrinterUsbMonitor.service"
+    "NDDPrinterMonitor.service"
+)
+
+for SERVICE_NAME in "${SERVICOS[@]}"; do
+    echo -e "\n🔍 Garantindo que o serviço $SERVICE_NAME esteja habilitado..."
+    sudo systemctl enable "$SERVICE_NAME"
+
+    echo "🔍 Verificando o status do serviço $SERVICE_NAME..."
+    if systemctl is-active --quiet "$SERVICE_NAME"; then
+        echo "✅ O serviço $SERVICE_NAME já está em execução."
+    else
+        echo "⚠️ O serviço $SERVICE_NAME não está rodando. Tentando iniciar..."
+        sudo systemctl start "$SERVICE_NAME"
+
+        if systemctl is-active --quiet "$SERVICE_NAME"; then
+            echo "✅ O serviço $SERVICE_NAME foi iniciado com sucesso."
+        else
+            echo "❌ Falha ao iniciar o serviço $SERVICE_NAME."
+            echo "   ➡️ Verifique manualmente com: sudo systemctl status $SERVICE_NAME"
+        fi
+    fi
+done
+
+
 ### === CRIAÇÃO DO SCRIPT DE VERIFICAÇÃO DE MÚLTIPLOS SERVIÇOS COM RESUMO === ###
 cat <<'EOF' | sudo tee /usr/local/bin/verificar_ndd.sh > /dev/null
 #!/bin/bash
@@ -159,9 +187,29 @@ sudo systemctl daemon-reload
 sudo systemctl enable verificar-ndd.service
 echo "✅ Serviço de verificação criado e habilitado para iniciar com o sistema."
 
-### === HOSTNAME E IP === ###
+### === HOSTNAME, IP E STATUS DOS SERVIÇOS === ###
 echo "📡 Hostname da máquina: $(hostname)"
 IP_LOCAL=$(ip -4 addr show $(ip route get 8.8.8.8 | awk '{print $5; exit}') | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 echo "📡 IP local da máquina: $IP_LOCAL"
 
-echo "✅ Instalação e configuração concluídas com sucesso!"
+echo -e "\n🔍 Resumo do status dos serviços NDD..."
+
+for SERVICE_NAME in "${SERVICOS[@]}"; do
+    # Verifica se está habilitado
+    if systemctl is-enabled --quiet "$SERVICE_NAME"; then
+        STATUS_ENABLED="habilitado"
+    else
+        STATUS_ENABLED="❌ desabilitado"
+    fi
+
+    # Verifica se está ativo
+    if systemctl is-active --quiet "$SERVICE_NAME"; then
+        STATUS_ACTIVE="em execução"
+    else
+        STATUS_ACTIVE="❌ parado"
+    fi
+
+    echo "🔹 $SERVICE_NAME → $STATUS_ENABLED / $STATUS_ACTIVE"
+done
+
+echo -e "\n✅ Instalação e configuração concluídas com sucesso!"
