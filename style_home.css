@@ -15,6 +15,12 @@ body{
     background-size: contain;
     background-position: center;
 }
+button{
+    font-size: 16px;
+    padding: 6px;
+    border-radius: 6px;
+    margin: 2px;
+}
 
 .code-box {
         background-color: #272822;

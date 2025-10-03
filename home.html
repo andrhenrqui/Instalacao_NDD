@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> 
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style_home.css">
     <title>Canal do técnico - HOME</title>
 </head>
+
 <body>
     <header>
     </header>
     <main>
         <h1>Instalador NDD Orbix - LINUX</h1>
+        <p> Portal NDD</p>
+        <p><a href="https://auth-portal.nddorbix.com/Account/Login" target="_blank">
+                <button>NDD Orbix</button>
+            </a>
+        </p>
+
         <p> Clique no link para baixar o Instalador.</p>
-        <p><a href="instalacao_ndd_agente.sh">Instalação NDD agente</a></p>
+        <p><a href="instalacao_ndd_agente.sh">
+                <button>Download DCA <i class="bx bx-cloud-download"></i></button></a></p>
 
         <h3>Instruções de Instalação</h3>
         <ol>
@@ -22,31 +31,31 @@
             <li>Dê permissão de execução ao script no terminal:</li>
             <div class="code-box">
                 <span>chmod +x instalacao_ndd_agente.sh</span>
-                <button class="copy-btn" onclick="copiarComando(this)" data-comando="chmod +x instalacao_ndd_agente.sh">Copiar</button>
+                <button class="copy-btn" onclick="copiarComando(this)"
+                    data-comando="chmod +x instalacao_ndd_agente.sh">Copiar</button>
             </div>
             <li>Inicie o script:</li>
             <div class="code-box">
                 <span>bash ./instalacao_ndd_agente.sh</span>
-                <button class="copy-btn" onclick="copiarComando(this)" data-comando="bash ./instalacao_ndd_agente.sh">Copiar</button>
+                <button class="copy-btn" onclick="copiarComando(this)"
+                    data-comando="bash ./instalacao_ndd_agente.sh">Copiar</button>
             </div>
             <li>Informe o TENNANT:</li>
             <div class="code-box">
                 <span>SELBETTI</span>
                 <button class="copy-btn" onclick="copiarComando(this)" data-comando="SELBETTI">Copiar</button>
             </div>
-            <li>Serial do cliente:</li>
+            <li>Serial:</li>
             <div class="code-box">
                 <span>31a63c7a-367d-4d98-259a-08dd02500b33</span>
-                <button class="copy-btn" onclick="copiarComando(this)" data-comando="31a63c7a-367d-4d98-259a-08dd02500b33">Copiar</button>
+                <button class="copy-btn" onclick="copiarComando(this)"
+                    data-comando="31a63c7a-367d-4d98-259a-08dd02500b33">Copiar</button>
             </div>
             <li>Selecione NO para as duas próximas interações. </li>
             <li>Na tela a seguir confira o HOSTNAME, IP e Status da instalação. </li>
-
         </ol>
-        
-        <div class="div-conf-email">
 
-            
+        <div class="div-conf-email">
             <h2>Configuração de email - SMTP</h2>
             <ol>
                 <li>Servidor SMTP: </li>
@@ -57,12 +66,14 @@
                 <li>Usuário de autenticação: </li>
                 <div class="code-box">
                     <span>scanneritajaiselbetti@gmail.com</span>
-                    <button class="copy-btn" onclick="copiarComando(this)" data-comando="scanneritajaiselbetti@gmail.com">Copiar</button>
+                    <button class="copy-btn" onclick="copiarComando(this)"
+                        data-comando="scanneritajaiselbetti@gmail.com">Copiar</button>
                 </div>
                 <li>Senha de autenticação: </li>
                 <div class="code-box">
                     <span>bmjdqerxryknxzvk</span>
-                    <button class="copy-btn" onclick="copiarComando(this)" data-comando="bmjdqerxryknxzvk">Copiar</button>
+                    <button class="copy-btn" onclick="copiarComando(this)"
+                        data-comando="bmjdqerxryknxzvk">Copiar</button>
                 </div>
                 <li>Porta: </li>
                 <div class="code-box">
@@ -75,13 +86,9 @@
                     <button class="copy-btn" onclick="copiarComando(this)" data-comando="SSL">Copiar</button>
                 </div>
             </ol>
-            
-            
-            
         </div>
-        
-        <div class="driver-linux">
 
+        <div class="driver-linux">
             <h2>Drivers para Linux</h2>
             <h3>A seguir temos versões estáveis conhecidas de drivers para Linux</h3>
             <ul>
@@ -141,7 +148,7 @@
                     </p>
                 </li>
                 <li>
-                    <p>Kyocera ECOSYS M3645dn - 
+                    <p>Kyocera ECOSYS M3645dn -
                         <a href="Linux/Kyocera-ECOSYS-M3645dn.ppd"><i class="bx bx-cloud-download"></i></a>
                     </p>
                 </li>
@@ -186,27 +193,27 @@
                     </p>
                 </li>
                 <li>
-                    <p>Ricoh MP 501 - 
+                    <p>Ricoh MP 501 -
                         <a href="Linux/Ricoh-MP-501-PDF-Ricoh.ppd"><i class="bx bx-cloud-download"></i></a>
                     </p>
                 </li>
                 <li>
-                    <p>Ricoh MP 601 - 
+                    <p>Ricoh MP 601 -
                         <a href="Linux/Ricoh-MP-601-PDF-Ricoh.ppd"><i class="bx bx-cloud-download"></i></a>
                     </p>
                 </li>
                 <li>
-                    <p>Ricoh MP C2003 - 
+                    <p>Ricoh MP C2003 -
                         <a href="Linux/Ricoh-MP-C2003-PDF-Ricoh.ppd"><i class="bx bx-cloud-download"></i></a>
                     </p>
                 </li>
                 <li>
-                    <p>Ricoh MP C2004 - 
+                    <p>Ricoh MP C2004 -
                         <a href="Linux/Ricoh-MP-C2004-PDF-Ricoh.ppd"><i class="bx bx-cloud-download"></i></a>
                     </p>
                 </li>
                 <li>
-                    <p>Ricoh MP C2004ex - 
+                    <p>Ricoh MP C2004ex -
                         <a href="Linux/Ricoh-MP-C2004ex-PDF-Ricoh.ppd"><i class="bx bx-cloud-download"></i></a>
                     </p>
                 </li>
@@ -216,17 +223,17 @@
                     </p>
                 </li>
                 <li>
-                    <p>Ricoh SP 3710SF - 
+                    <p>Ricoh SP 3710SF -
                         <a href="Linux/Ricoh-SP-3710SF-Postscript-Ricoh.ppd"><i class="bx bx-cloud-download"></i></a>
                     </p>
                 </li>
                 <li>
-                    <p>Ricoh SP 4510DN - 
+                    <p>Ricoh SP 4510DN -
                         <a href="Linux/Ricoh-SP-4510DN-PDF-Ricoh.ppd"><i class="bx bx-cloud-download"></i></a>
                     </p>
                 </li>
                 <li>
-                    <p>Ricoh SP 4510SF - 
+                    <p>Ricoh SP 4510SF -
                         <a href="Linux/Ricoh-SP-4510SF-PDF-Ricoh.ppd"><i class="bx bx-cloud-download"></i></a>
                     </p>
                 </li>
@@ -237,4 +244,5 @@
     <footer></footer>
     <script src="script.js"></script>
 </body>
+
 </html>
