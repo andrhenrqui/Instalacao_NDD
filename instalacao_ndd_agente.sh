@@ -45,12 +45,14 @@ sudo hostnamectl set-hostname "${SETOR}-${UNIDADE}"
 echo "📡 Verificando atualização de pacotes configurados..."
 if ! sudo apt-get update; then
     echo "⚠️ Erro ao atualizar pacotes. Tentando novamente com --fix-missing..."
+    sleep 5
     sudo apt-get update --fix-missing || { echo "❌ Falha ao atualizar pacotes."; exit 1; }
 fi
 
 echo "🚀 Iniciando instalação de pacotes disponíveis..."
 if ! sudo apt-get upgrade -y; then
     echo "⚠️ Erro durante o upgrade. Tentando corrigir dependências..."
+    sleep 5
     sudo apt-get install -f -y
     sudo apt-get autoremove -y
     sudo apt-get autoclean -y
@@ -85,21 +87,36 @@ fi
 
 ### === AJUSTES SYSCTL === ###
 echo "🔧 Ajustando sysctl.conf para aumentar limites do inotify..."
-sudo sed -i '/fs.inotify.max_user_instances/d' /etc/sysctl.conf
-sudo sed -i '/fs.inotify.max_user_watches/d' /etc/sysctl.conf
+sudo sed -i '/fs.inotify.max_user_instances/d' /etc/sysctl.conf || true
+sudo sed -i '/fs.inotify.max_user_watches/d' /etc/sysctl.conf || true
 echo "fs.inotify.max_user_instances=8192" | sudo tee -a /etc/sysctl.conf
 echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
+sudo sysctl -p || true
 echo "✅ Ajustes no sysctl.conf aplicados com sucesso."
 
-### === INSTALAÇÃO DO AGENTE NDD === ###
+# Evita sobrescrever ou duplicar repositório
+if [ ! -f /etc/apt/sources.list.d/ndd.list ]; then
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/ndd.public] https://packages-orbix.ndd.tech/apt-repo/ stable main" | sudo tee /etc/apt/sources.list.d/ndd.list
+else
+    echo "ℹ️ Repositório da NDD já configurado. Pulando criação do arquivo."
+fi
+
+echo "🔄 Atualizando pacotes após adicionar repositório da NDD..."
+if ! sudo apt-get update -y; then
+    echo "⚠️ Erro ao atualizar pacotes do repositório da NDD. Tentando novamente com --fix-missing..."
+    sleep 5
+    sudo apt-get update --fix-missing -y || { echo "❌ Falha ao atualizar pacotes da NDD."; exit 1; }
+fi
+
 echo -e "\n🚀 Iniciando a instalação do agente NDD..."
 if ! sudo apt install ndd-dca-and-cloud-connector; then
     echo "⚠️ Erro durante a instalação do agente. Tentando corrigir problemas..."
+    sleep 5
     sudo apt-get install -f -y
     sudo apt-get autoremove -y
     sudo apt-get autoclean -y
     echo "🔄 Tentando novamente a instalação..."
+    sleep 5
     if ! sudo apt install ndd-dca-and-cloud-connector --fix-missing; then
         echo "❌ Não foi possível concluir a instalação do agente NDD mesmo após as correções."
         exit 1
@@ -123,6 +140,7 @@ for SERVICE_NAME in "${SERVICOS[@]}"; do
         echo "✅ O serviço $SERVICE_NAME já está em execução."
     else
         echo "⚠️ O serviço $SERVICE_NAME não está rodando. Tentando iniciar..."
+        sleep 5
         sudo systemctl start "$SERVICE_NAME"
 
         if systemctl is-active --quiet "$SERVICE_NAME"; then
@@ -130,6 +148,7 @@ for SERVICE_NAME in "${SERVICOS[@]}"; do
         else
             echo "❌ Falha ao iniciar o serviço $SERVICE_NAME."
             echo "   ➡️ Verifique manualmente com: sudo systemctl status $SERVICE_NAME"
+            sleep 5
         fi
     fi
 done
