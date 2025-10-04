@@ -94,7 +94,15 @@ echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p || true
 echo "✅ Ajustes no sysctl.conf aplicados com sucesso."
 
-# Evita sobrescrever ou duplicar repositório
+### === REPOSITÓRIO NDD === ###
+echo "🔑 Importando chave pública da NDD..."
+if [ ! -f /usr/share/keyrings/ndd.public ]; then
+    wget -qO - https://packages-orbix.ndd.tech/apt-repo/ndd.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/ndd.public
+else
+    echo "ℹ️ Chave pública da NDD já existente. Pulando download."
+fi
+
+echo "📦 Configurando repositório da NDD..."
 if [ ! -f /etc/apt/sources.list.d/ndd.list ]; then
     echo "deb [arch=amd64 signed-by=/usr/share/keyrings/ndd.public] https://packages-orbix.ndd.tech/apt-repo/ stable main" | sudo tee /etc/apt/sources.list.d/ndd.list
 else
@@ -108,6 +116,7 @@ if ! sudo apt-get update -y; then
     sudo apt-get update --fix-missing -y || { echo "❌ Falha ao atualizar pacotes da NDD."; exit 1; }
 fi
 
+### === INSTALAÇÃO DO AGENTE NDD === ###
 echo -e "\n🚀 Iniciando a instalação do agente NDD..."
 if ! sudo apt install ndd-dca-and-cloud-connector; then
     echo "⚠️ Erro durante a instalação do agente. Tentando corrigir problemas..."
