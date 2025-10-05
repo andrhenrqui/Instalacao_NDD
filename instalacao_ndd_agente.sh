@@ -97,14 +97,14 @@ echo "✅ Ajustes no sysctl.conf aplicados com sucesso."
 ### === REPOSITÓRIO NDD === ###
 echo "🔑 Importando chave pública da NDD..."
 if [ ! -f /usr/share/keyrings/ndd.public ]; then
-    wget -qO - https://packages-orbix.ndd.tech/apt-repo/ndd.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/ndd.public
+    sudo wget -O /usr/share/keyrings/ndd.public packages-orbix.ndd.tech/apt-repo/ndd.public
 else
     echo "ℹ️ Chave pública da NDD já existente. Pulando download."
 fi
 
 echo "📦 Configurando repositório da NDD..."
 if [ ! -f /etc/apt/sources.list.d/ndd.list ]; then
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/ndd.public] https://packages-orbix.ndd.tech/apt-repo/ stable main" | sudo tee /etc/apt/sources.list.d/ndd.list
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/ndd.public] https://packages-orbix.ndd.tech/apt-repo/  stable main" | sudo tee /etc/apt/sources.list.d/ndd.list
 else
     echo "ℹ️ Repositório da NDD já configurado. Pulando criação do arquivo."
 fi
