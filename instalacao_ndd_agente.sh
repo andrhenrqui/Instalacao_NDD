@@ -22,24 +22,36 @@ fi
 ### === PREPARAÇÃO DO AMBIENTE === ###
 echo "🚀 Iniciando a preparação do ambiente..."
 
-echo "⚠️ Selecione o setor para esta configuração: ⚠️"
-PS3="Digite o número da opção e pressione Enter: "
-options=("Prefeitura (Administrativos)" "Escolas" "Saúde")
-select setor in "${options[@]}"; do
-    case $REPLY in
-        1) SETOR="adm"; break ;;
-        2) SETOR="edu"; break ;;
-        3) SETOR="sau"; break ;;
-        *) echo "Opção inválida. Tente novamente." ;;
-    esac
-done
-echo "Você escolheu o setor: $SETOR"
+echo "🔍 Verificando informações do sistema..."
+CURRENT_HOSTNAME=$(hostname)
+echo "📡 Hostname atual: $CURRENT_HOSTNAME"
 
-read -p "Digite o nome do setor ou unidade onde está realizando a configuração: " UNIDADE
-echo "Setor/unidade configurado: $UNIDADE"
+read -p "Deseja alterar o hostname? (s/N): " RESP
 
-echo "Definindo hostname para ${SETOR}-${UNIDADE}..."
-sudo hostnamectl set-hostname "${SETOR}-${UNIDADE}"
+if [[ "$RESP" =~ ^[Ss]$ ]]; then
+    echo "⚠️ Selecione o setor para esta configuração: ⚠️"
+    PS3="Digite o número da opção e pressione Enter: "
+    options=("Prefeitura (Administrativos)" "Escolas" "Saúde")
+    select setor in "${options[@]}"; do
+        case $REPLY in
+            1) SETOR="adm"; break ;;
+            2) SETOR="edu"; break ;;
+            3) SETOR="sau"; break ;;
+            *) echo "Opção inválida. Tente novamente." ;;
+        esac
+    done
+    echo "Você escolheu o setor: $SETOR"
+
+    read -p "Digite o nome do setor ou unidade onde está realizando a configuração: " UNIDADE
+    echo "Setor/unidade configurado: $UNIDADE"
+
+    NEW_HOSTNAME="${SETOR}-${UNIDADE}"
+    echo "Definindo hostname para ${NEW_HOSTNAME}..."
+    sudo hostnamectl set-hostname "$NEW_HOSTNAME"
+    echo "✅ Hostname alterado para: $(hostname)"
+else
+    echo "➡️ Mantendo hostname: $CURRENT_HOSTNAME"
+fi
 
 ### === ATUALIZAÇÃO DE PACOTES COM TRATAMENTO DE ERROS === ###
 echo "📡 Verificando atualização de pacotes configurados..."
