@@ -55,6 +55,32 @@
             <li>Na tela a seguir confira o HOSTNAME, IP e Status da instalação. </li>
         </ol>
 
+        <h3>Em erros na Instalação</h3>
+        <ol>
+            <li><strong>NÃO UTILIZAR SEM ACOMPANHAMENTO</strong></li>
+            <p> Clique para baixar o REMOVEDOR.</p>
+            <p><a href="limpar_ndd.sh">
+                <button>Removedor DCA <i class="bx bx-cloud-download"></i></button></a></p>
+            
+            <li>Após o download, copie e cole na área de trabalho. </li>
+            <li>Clique com o direito no fundo da área e escolha abrir terminal.</li>
+            <li>Dê permissão de execução ao script no terminal:</li>
+            <div class="code-box">
+                <span>sed -i 's/\r$//' limpar_ndd.sh</span>
+                <button class="copy-btn" onclick="copiarComando(this)"
+                    data-comando="sed -i 's/\r$//' limpar_ndd.sh">Copiar</button>
+            </div>
+            <div class="code-box">
+                <span>chmod +x limpar_ndd.sh</span>
+                <button class="copy-btn" onclick="copiarComando(this)"
+                    data-comando="chmod +x limpar_ndd.sh">Copiar</button>
+            </div>
+
+
+
+
+        </ol>
+
         <div class="div-conf-email">
             <h2>Configuração de email - SMTP</h2>
             <ol>
