@@ -1,6 +1,68 @@
 #!/bin/bash
 set -e
 
+### === VERIFICAÇÃO DO SISTEMA === ###
+echo "🔍 Verificando versão do sistema..."
+
+# Obtém o nome e a versão da distro
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    DISTRO=$NAME
+    VERSAO=$VERSION_ID
+else
+    echo "❌ Não foi possível identificar o sistema operacional."
+    exit 1
+fi
+
+echo "📦 Sistema detectado: $DISTRO $VERSAO"
+
+# Converte versão em número inteiro simples para comparação
+# (ex: "20.04" vira "2004")
+NUMERO_VERSAO=$(echo "$VERSAO" | tr -d '.')
+
+# Verifica compatibilidade conforme distro
+case "$DISTRO" in
+    "Ubuntu"*)
+        if (( NUMERO_VERSAO < 2004 )); then
+            echo "⚠️ Requer Ubuntu 20.04 ou superior (x64)."
+            exit 1
+        fi
+        ;;
+    "Debian"*)
+        if (( NUMERO_VERSAO < 12 )); then
+            echo "⚠️ Requer Debian 12 ou superior (x64)."
+            exit 1
+        fi
+        ;;
+    "Fedora"*)
+        if (( NUMERO_VERSAO < 38 )); then
+            echo "⚠️ Requer Fedora 38 ou superior (x64)."
+            exit 1
+        fi
+        ;;
+    "Linux Mint"*)
+        if (( NUMERO_VERSAO < 22 )); then
+            echo "⚠️ Requer Linux Mint 22 ou superior (x64)."
+            exit 1
+        fi
+        ;;
+    *)
+        echo "⚠️ Distribuição não suportada: $DISTRO"
+        echo "Compatíveis: Ubuntu 20.04+, Debian 12+, Fedora 38+, Mint 22+"
+        exit 1
+        ;;
+esac
+
+# Confirma arquitetura
+ARQUITETURA=$(uname -m)
+if [[ "$ARQUITETURA" != "x86_64" ]]; then
+    echo "⚠️ Requer sistema 64 bits (x64). Arquitetura detectada: $ARQUITETURA"
+    exit 1
+fi
+
+echo "✅ Sistema compatível. Prosseguindo com a instalação..."
+echo
+
 ### === CONFIGURAÇÕES PERSONALIZÁVEIS === ###
 COMUNICACAO="direta"  # direta, proxy, gateway
 CERT_ORIGEM="/caminho/para/certificado.cer"
