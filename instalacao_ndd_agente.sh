@@ -133,7 +133,6 @@ if ! sudo apt-get upgrade -y; then
     echo "🔄 Tentando novamente o upgrade..."
     if ! sudo apt-get upgrade -y; then
         echo "❌ Não foi possível concluir o upgrade de pacotes."
-        exit 1
     fi
 fi
 
