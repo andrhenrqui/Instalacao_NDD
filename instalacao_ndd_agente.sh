@@ -207,6 +207,33 @@ if ! sudo apt install ndd-dca-and-cloud-connector; then
 fi
 echo "✅ Agente NDD instalado com sucesso!"
 
+### === REMOÇÃO DO ARQUIVO SingletonLock DE NAVEGADORES BASEADOS NO CHROME === ###
+echo "🧹 Verificando arquivos de bloqueio (SingletonLock) de navegadores baseados no Chrome..."
+
+# Lista de diretórios de configuração possíveis
+BROWSERS=(
+    "$HOME/.config/google-chrome"
+    "$HOME/.config/chromium"
+)
+
+for DIR in "${BROWSERS[@]}"; do
+    LOCK_FILE="$DIR/SingletonLock"
+    if [ -f "$LOCK_FILE" ]; then
+        echo "⚠️ Arquivo SingletonLock encontrado em: $LOCK_FILE"
+        echo "🗑️ Removendo arquivo de bloqueio..."
+        rm -f "$LOCK_FILE"
+        if [ ! -f "$LOCK_FILE" ]; then
+            echo "✅ Arquivo SingletonLock removido com sucesso de: $DIR"
+        else
+            echo "❌ Falha ao remover o arquivo SingletonLock em: $DIR"
+        fi
+    else
+        echo "ℹ️ Nenhum arquivo SingletonLock encontrado em: $DIR"
+    fi
+done
+
+echo "✅ Verificação de arquivos SingletonLock concluída."
+
 # Lista de serviços que devem estar rodando
 SERVICOS=(
     "NDDDCAandCloudConnector.service"
