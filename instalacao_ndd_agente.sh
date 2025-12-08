@@ -117,6 +117,7 @@ fi
 
 ### === ATUALIZAÇÃO DE PACOTES COM TRATAMENTO DE ERROS === ###
 echo "📡 Verificando atualização de pacotes configurados..."
+sudo dpkg --configure -a
 sudo systemctl stop cups-browsed.service
 sudo systemctl restart cups
 if ! sudo apt-get update; then
