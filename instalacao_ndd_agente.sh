@@ -117,8 +117,9 @@ fi
 
 ### === ATUALIZAÇÃO DE PACOTES COM TRATAMENTO DE ERROS === ###
 echo "📡 Verificando atualização de pacotes configurados..."
-sudo dpkg --configure -a
 sudo systemctl stop cups-browsed.service
+sudo dpkg --configure -a
+sudo apt-get install net-tools -y
 sudo systemctl restart cups
 if ! sudo apt-get update; then
     echo "⚠️ Erro ao atualizar pacotes. Tentando novamente com --fix-missing..."
@@ -318,10 +319,33 @@ sudo systemctl daemon-reload
 sudo systemctl enable verificar-ndd.service
 echo "✅ Serviço de verificação criado e habilitado para iniciar com o sistema."
 
-### === HOSTNAME, IP E STATUS DOS SERVIÇOS === ###
+### === HOSTNAME, IP, MÁSCARA E GATEWAY === ###
 echo "📡 Hostname da máquina: $(hostname)"
-IP_LOCAL=$(ip -4 addr show $(ip route get 8.8.8.8 | awk '{print $5; exit}') | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+
+# Detecta interface ativa automaticamente
+INTERFACE=$(ip route get 8.8.8.8 | awk '{print $5; exit}')
+
+# Captura IP e máscara CIDR
+IP_INFO=$(ip -4 addr show "$INTERFACE" | grep -oP 'inet\s+\K[\d./]+')
+IP_LOCAL=${IP_INFO%/*}
+CIDR_MASK=${IP_INFO#*/}
+
+# Obtém máscara decimal usando ipcalc
+if ! command -v ipcalc &> /dev/null; then
+    echo "📦 Instalando utilitário ipcalc para cálculo de máscara..."
+    sudo apt-get install ipcalc -y >/dev/null 2>&1
+fi
+
+DEC_MASK=$(ipcalc "$IP_LOCAL/$CIDR_MASK" | grep -oP 'Netmask:\s+\K[\d.]+')
+
+# Obtém o gateway padrão
+GATEWAY=$(ip route | grep default | awk '{print $3}')
+
+echo "📡 Interface ativa: $INTERFACE"
 echo "📡 IP local da máquina: $IP_LOCAL"
+echo "📡 Máscara CIDR: /$CIDR_MASK"
+echo "📡 Máscara decimal: $DEC_MASK"
+echo "🚪 Gateway padrão: $GATEWAY"
 
 echo -e "\n🔍 Resumo do status dos serviços NDD..."
 
