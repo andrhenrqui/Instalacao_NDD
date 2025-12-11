@@ -118,6 +118,7 @@ fi
 ### === ATUALIZAÇÃO DE PACOTES COM TRATAMENTO DE ERROS === ###
 echo "📡 Verificando atualização de pacotes configurados..."
 sudo systemctl stop cups-browsed.service
+sudo systemctl disable cups-browsed.service
 sudo dpkg --configure -a
 sudo apt-get install net-tools -y
 sudo systemctl restart cups
