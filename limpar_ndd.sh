@@ -4,6 +4,7 @@ set -e
 echo "🧹 Iniciando limpeza automática dos pacotes NDD..."
 
 # Localiza todos os pacotes relacionados à NDD
+sudo apt purge ndd-dca-and-cloud-connector
 PACOTES=$(dpkg -l | grep ndd | awk '{print $3}')
 
 if [ -z "$PACOTES" ]; then
